@@ -1,0 +1,5 @@
+Radar,Product,Description,Level,Start,End
+S BAND DWR CHERRAPUNJI,RSCHR_L2B_STD,DWR Data for Cheerapunji,L2B,2016-05-20,2022-11-05
+S BAND DWR SHAR,RSSHR_L2B_STD,DWR Data for SHAR,L2B,2018-08-30,2023-03-31
+TERLS C BAND,RCTLS_L2B_STD,Standard products from TERLS Doppler weather radar received at every 10 minutes interval,L2B,2016-03-09,2025-07-13
+TERLS C BAND,RCTLS_L2C_VOL,"Volumetric gridded data of TERLS DWR,using DPRF mode files only,containing corrected reflectivity(DBZ) and radial velocity(VEL)",L2C,2023-09-01,2025-07-13

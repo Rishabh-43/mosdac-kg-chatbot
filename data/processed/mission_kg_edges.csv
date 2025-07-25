@@ -1,0 +1,98 @@
+INSAT-3A,by,hasOrbitType
+INSAT-3A,Commissioned,hasStatus
+INSAT-3A,INSAT-3A is a multipurpose satellite for providing telecommunications,hasPayload
+INSAT-3A,television broadcasting,hasPayload
+INSAT-3A,meteorological and search & rescue services. It carries twenty four transponders - twelve operating in the normal C-band frequency,hasPayload
+INSAT-3A,six in Extended C-band and six in Ku-band. Nine of the twelve normal C-band transponders provide expanded coverage and the remaining three have India coverage beam. All the extended C-band as well as the Ku-band transponders has India coverage beams. INSAT-3A also carries a Ku-band beacon. For meteorological observation,hasPayload
+INSAT-3A,INSAT-3A carries a three channel Very High Resolution Radiometer (VHRR) with 2 km resolution in the visible band and 8 km resolution in thermal infrared and water vapour bands. In addition,hasPayload
+INSAT-3A,INSAT-3A carries a Charge Coupled Device (CCD) camera which operates in the visible and short wave infrared bands providing a spatial resolution of 1 km. A Data Relay Transponder (DRT) operating in UHF band is incorporated for realtime hydro-meteorological data collection from unattended platforms located on land and river basins. The data is then relayed in extended C-band to a central location. INSAT-3A also carries another transponder for Satellite Aided Search and Rescue (SAS & R) as part of India's contribution to the international Satellite Aided Search and Rescue programme. INSAT-3A was launched by European Ariane-5G Launch Vehicle into a Geosynchronous Transfer Orbit (GTO) with a perigee of 200 km and an apogee of 35,hasPayload
+INSAT-3A,980 km. The satellite is maneuvered to its final orbit by firing the satellite's apogee motor. Subsequently,hasPayload
+INSAT-3A,the deployment of solar array,hasPayload
+INSAT-3A,antennae and the solar sail is carried out and the satellite is commissioned after in-orbit checkout.,hasPayload
+INSAT-3D,Operational,hasStatus
+INSAT-3D,INSAT or the Indian National Satellite System is a series of multipurpose Geo-stationary satellites launched by ISRO to satisfy the telecommunications,usedFor
+INSAT-3D,broadcasting,usedFor
+INSAT-3D,meteorology,usedFor
+INSAT-3D,and search and rescue needs of India. Commissioned in 1983,usedFor
+INSAT-3D,INSAT is the largest domestic communication system in the Asia Pacific Region. The satellite is monitored and controlled by Master Control Facilities that exist in Hassan and Bhopal. INSAT-3D is a multipurpose geosynchronous spacecraft with main meteorological payloads (imager and sounder). The main objectives for this mission are to provide an operational,usedFor
+INSAT-3D,environmental and storm warning system to protect life and property. INSAT3D is monitoring the earth’s surface,usedFor
+INSAT-3D,oceanic observations and also provide data dissemination capabilities. It provides Broadcast Satellite Services (BSS) through two S-band transponders. The data acquisition and processing system is established at Space Applications Centre,usedFor
+INSAT-3D,Bopal Campus,usedFor
+INSAT-3D,Ahmedabad,usedFor
+INSAT-3D,India. The processing of INSAT-3D data is taken place broadly in four steps.,usedFor
+INSAT-3DR,Operational,hasStatus
+INSAT-3DR,INSAT or the Indian National Satellite System is a series of multipurpose Geo-stationary satellites launched by ISRO to satisfy the telecommunications,usedFor
+INSAT-3DR,broadcasting,usedFor
+INSAT-3DR,meteorology,usedFor
+INSAT-3DR,and search and rescue needs of India. Commissioned in 1983,usedFor
+INSAT-3DR,INSAT is the largest domestic communication system in the Asia Pacific Region. The satellite is monitored and controlled by Master Control Facilities that exist in Hassan and Bhopal. INSAT-3DR is a multipurpose geosynchronous spacecraft with main meteorological payloads (imager and sounder). The main objectives for this mission are to provide an operational,usedFor
+INSAT-3DR,environmental and storm warning system to protect life and property. INSAT3DR is monitoring the earth’s surface,usedFor
+INSAT-3DR,oceanic observations and also provide data dissemination capabilities. It provides Broadcast Satellite Services (BSS) through two S-band transponders. The data acquisition and processing system is established at Space Applications Centre,usedFor
+INSAT-3DR,Bopal Campus,usedFor
+INSAT-3DR,Ahmedabad,usedFor
+INSAT-3DR,India. The processing of INSAT-3DR data is taken place broadly in four steps.,usedFor
+INSAT-3DS,Operational,hasStatus
+INSAT-3DS,INSAT or the Indian National Satellite System is a series of multipurpose Geo-stationary satellites launched by ISRO to satisfy the telecommunications,usedFor
+INSAT-3DS,broadcasting,usedFor
+INSAT-3DS,meteorology,usedFor
+INSAT-3DS,and search and rescue needs of India. Commissioned in 1983,usedFor
+INSAT-3DS,INSAT is the largest domestic communication system in the Asia Pacific Region. The satellite is monitored and controlled by Master Control Facilities that exist in Hassan and Bhopal. INSAT-3DS is a multipurpose geosynchronous spacecraft with main meteorological payloads (imager and sounder). The main objectives for this mission are to provide an operational,usedFor
+INSAT-3DS,environmental and storm warning system to protect life and property. INSAT3S is monitoring the earth’s surface,usedFor
+INSAT-3DS,oceanic observations and also provide data dissemination capabilities. It provides Broadcast Satellite Services (BSS) through two S-band transponders. The data acquisition and processing system is established at Space Applications Centre,usedFor
+INSAT-3DS,Bopal Campus,usedFor
+INSAT-3DS,Ahmedabad,usedFor
+INSAT-3DS,India. The processing of INSAT-3DS data is taken place broadly in four steps.,usedFor
+KALPANA-1,September 2002,launchedOn
+KALPANA-1,operations,hasOrbitType
+KALPANA-1,Commissioned,hasStatus
+KALPANA-1,Metsat carries on-board a Very High ResolutionRadiometer (VHRR) and a Data Relay Transponder (DRT) for weather data transmission. VHRR provides earth imageries in visible band with a resolution of2 km,usedFor
+KALPANA-1,in thermal infrared and water vapor bands with 8 km. DRT collects weather data from un-attended data collection platforms located throughout India and transmits the same to centrally located Meteorological Data Utilisation Centre. The satellite dry mass is about 495 kg. Metsat was launched on- board upgraded and modified satellite launch vehicle (PSLV) with a lift–off mass of 1060 kgs in September 2002. After successful launch and early orbit operations and in orbit characterization of the Payload,usedFor
+KALPANA-1,the satellite has been commissioned for routine usage of weather data and imageries.,usedFor
+Megha Tropiques,inclined,hasOrbitType
+Megha Tropiques,Unknown,hasStatus
+Megha Tropiques,Megha-Tropiques is an Indo-French Joint Satellite Mission for studying the water cycle and energy exchanges in the tropics. The main objective of this mission is to understand the life cycle of convective systems that influence the tropical weather and climate and their role in associated energy and moisture budget of the atmosphere in tropical regions. Megha-Tropiques provides scientific data on the contribution of the water cycle to the tropical atmosphere,usedFor
+Megha Tropiques,with information on condensed water in clouds,usedFor
+Megha Tropiques,water vapour in the atmosphere,usedFor
+Megha Tropiques,precipitation,usedFor
+Megha Tropiques,and evaporation. With its circular orbit inclined 20 deg to the equator,usedFor
+Megha Tropiques,the Megha-Tropiques is a unique satellite for climate research that should also aid scientists seeking to refine prediction models. The Megha-Tropiques has day,usedFor
+Megha Tropiques,night and all-weather viewing capabilities; it passes over India almost a dozen times every day,usedFor
+Megha Tropiques,giving scientists an almost real- time assessment of the evolution of clouds.,usedFor
+Oceansat-2,Operational,hasStatus
+Oceansat-2,Oceansat-2 satellite mainframe systems derive their heritage from previous IRS missions. Oceansat-2 was launched by PSLV-C14 from Satish Dhawan Space Centre,hasPayload
+Oceansat-2,Sriharikota on Sept. 23,hasPayload
+Oceansat-2,2009. It carries three payloads: Ocean Colour Monitor (OCM) Ku-band Pencil Beam scatterometer (SCAT) developed by ISRO Radio Occultation Sounder for Atmosphere (ROSA) developed by the Italian Space Agency. Oceansat-2 is envisaged to provide continuity of operational services of Oceansat-1(IRS-P4) with enhanced application potential.,hasPayload
+OCEANSAT-3,26 November 2022,launchedOn
+OCEANSAT-3,Operational,hasStatus
+OCEANSAT-3,EOS-06(Oceansat-3) also known as Earth Observing Satellite EOS-06(Oceansat-3),hasPayload
+OCEANSAT-3,was launched by PSLV-C54 from Satish Dhawan Space Centre,hasPayload
+OCEANSAT-3,Sriharikota on 26 November 2022. EOS-06(Oceansat-3) is developed to provide a unique opportunity for simultaneously measuring the physical,hasPayload
+OCEANSAT-3,biological and atmospheric parameters for the first time from three instruments,hasPayload
+OCEANSAT-3,(i) 13-band advanced Ocean Colour Monitor (OCM-3),hasPayload
+OCEANSAT-3,(ii) Ku-band Scatterometer (SCAT-3) and (ii) a 2-channel Sea Surface Temperature Monitor (SSTM). ARGOS is the fourth payload provided by French Space Agency (CNES) and serves as a data collection platform from various ocean based platform. EOS-06(Oceansat-3) is envisaged to provide continuity of operational services of Oceansat-1,hasPayload
+OCEANSAT-3,2 and SCATSAT-1 Mission with enhanced application potential.,hasPayload
+SARAL-AltiKa,Operational,hasStatus
+SARAL-AltiKa,SARAL mission results from the common interest of both CNES and ISRO in studying ocean from space using altimetry system and in promoting maximum use of the ARGOS Data Collecting System. Radar altimetry by satellite is a technique used in oceanography to measure,usedFor
+SARAL-AltiKa,globally over the oceans,usedFor
+SARAL-AltiKa,the sea level needed to understand ocean circulation and its variability. The importance of altimetry data to better understand the ocean circulation and its impact on the climate of the Earth led to the TOPEX/Poseidon and Jason series of satellites complemented by ERS1-2,usedFor
+SARAL-AltiKa,GFO and ENVISAT. With the launch of these missions began a data collection that must continue well into the century in order to monitor the inter-annual evolution and separate transient phenomena from secular variations. SARAL/AltiKa mission belongs to the global altimetry system and then participates to the precise and accurate observations of ocean circulation and sea surface elevation for its life time. Thus it is the aim of AltiKa part of the SARAL mission to provide altimetric measurements designed to study ocean circulation and sea surface elevation with the same accuracy as the one provided by ENVISAT mission and complementary to Jasons mission. The AltiKa project developed by CNES is based on a large Ka-band altimeter (35.75 GHz,usedFor
+SARAL-AltiKa,500MHz),usedFor
+SARAL-AltiKa,1st oceanographic altimeter using such a high frequency. The use of the Ka-band frequency will supply more accurate measurements (improvement of the spatial and vertical resolution) enabling a better observation of ices,usedFor
+SARAL-AltiKa,coastal areas,usedFor
+SARAL-AltiKa,continental water bodies as well as the waves height. The drawback of this Ka-band frequency is its sensitivity to rain that can lead to signal attenuation. The SARAL/AltiKa mission is part of the operational satellite altimetry system,usedFor
+SARAL-AltiKa,jointly with Jason-2,usedFor
+SARAL-AltiKa,and enables to ensure the service continuity which is nowadays provided by ENVISAT altimeter jointly with Jason-2 and Jason-1. By ensuring the observations continuity and widening the observation areas,usedFor
+SARAL-AltiKa,CNES answers the wish of the oceanography community by bringing a description: For the meso-scale in open ocean,usedFor
+SARAL-AltiKa,In coastal areas,usedFor
+SARAL-AltiKa,For the seasonal forecast,usedFor
+SARAL-AltiKa,For the hydrology,usedFor
+SARAL-AltiKa,For the climate studies. AltiKa data will thus contribute,usedFor
+SARAL-AltiKa,along with data from others altimetry missions,usedFor
+SARAL-AltiKa,to the development of operational oceanography,usedFor
+SARAL-AltiKa,to our climate understanding and to the development of forecasting capabilities through data assimilation methods improvement in coupled oceanatmosphere coupling models,usedFor
+SARAL-AltiKa,bio-chemistry models,usedFor
+SARAL-AltiKa,etc,usedFor
+SCATSAT-1,Unknown,hasStatus
+SCATSAT-1,Scatsat-1 was launched by PSLV-C35 from Satish Dhawan Space Centre,hasPayload
+SCATSAT-1,Sriharikota on September 26,hasPayload
+SCATSAT-1,2016. It carries the Ku-band Pencil Beam scatterometer (SCAT) payload developed by SAC-ISRO.,hasPayload

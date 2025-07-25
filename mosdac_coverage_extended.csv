@@ -1,0 +1,13 @@
+mission_name,sensor,min_lat,max_lat,min_lon,max_lon,resolution
+OCEANSAT-3,OCM-3,,,,,
+OCEANSAT-3,SCAT-3,,,,,
+OCEANSAT-3,SSTM,,,,,
+INSAT-3D,Imager & Sounder,,,,,
+INSAT-3DR,Imager & Sounder,,,,,
+SCATSAT-1,OSCAT,-60,60,-180,180,25 km
+OCEANSAT-2,OCM-2,-60,60,30,180,1 km
+MEGHA-TROPIQUES,SAPHIR,-23,23,-180,180,10 km
+SARAL-ALTIKA,ALTIKA,-81.5,81.5,-180,180,10 km
+INSAT-3A,CCD Camera,-40,40,30,130,1 km
+INSAT-3DS,Imager & Sounder,-60,60,30,130,4 km
+KALPANA-1,VHRR,-40,40,30,130,8 km
