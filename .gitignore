@@ -1,0 +1,6 @@
+rag_env/
+__pycache__/
+*.pyc
+*.pkl
+.env
+.DS_Store
