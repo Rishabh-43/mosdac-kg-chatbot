@@ -13,7 +13,7 @@ faq_df = pd.read_csv("mosdac_faq.csv")
 docs_df = pd.read_csv("mosdac_docs.csv")
 
 # Load model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
 # Prepare texts
 entries = []
