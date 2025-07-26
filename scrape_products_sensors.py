@@ -48,4 +48,4 @@ with open("mosdac_product_data_with_sensors.csv", "w", newline="", encoding="utf
         writer.writerow([product_name, product_url, sensor_info])
 
 driver.quit()
-print("✅ mosdac_product_data_with_sensors.csv created with product entries.")
+print("✅ mosdac_product_data_with_sensors.csv created with product entries")
