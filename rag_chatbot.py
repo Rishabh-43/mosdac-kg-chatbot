@@ -1,63 +1,62 @@
 import streamlit as st
-import pickle
-import faiss
+import chromadb
+from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
-from sklearn.preprocessing import normalize
 from googletrans import Translator
 import google.generativeai as genai
 
-# ---------- CONFIGURE GEMINI API ----------
+# --------- GEMINI API KEY ----------
 GEMINI_API_KEY = "AIzaSyAyhcpDKXBCs9J5B-lS_-RCbrCNcfKP7hw"
 genai.configure(api_key=GEMINI_API_KEY)
 
-# ---------- LOAD VECTOR DB ----------
+# --------- Load Chroma DB ----------
 @st.cache_resource
 def load_vector_db():
-    index = faiss.read_index("vector_db/faiss_index.bin")
-    with open("vector_db/metadata.pkl", "rb") as f:
-        metadata = pickle.load(f)
-    return index, metadata
+    client = chromadb.PersistentClient(path="vector_db/chroma")
+    collection = client.get_or_create_collection("mosdac_kg")
+    return collection
 
-# ---------- LOAD EMBEDDING MODEL ----------
+# --------- Load Embedding Model ----------
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    return SentenceTransformer("multi-qa-MiniLM-L6-cos-v1")
 
-# ---------- SEARCH FUNCTION ----------
-def search(query, index, metadata, model, k=10):
-    query_embedding = model.encode([query], convert_to_numpy=True)
-    query_embedding = normalize(query_embedding, axis=1)
-    D, I = index.search(query_embedding, k)
-    results = [metadata[i] for i in I[0]]
+# --------- Search from Vector DB ----------
+def search(query, collection, model, k=5):
+    query_embedding = model.encode([query])[0].tolist()
+    results = collection.query(query_embeddings=[query_embedding], n_results=k)
 
-    query_lower = query.lower()
-    ranked = sorted(results, key=lambda x: query_lower in x[1].lower(), reverse=True)
+    texts = []
+    for i in range(len(results["ids"][0])):
+        text = results["metadatas"][0][i]["text"]
+        source = results["metadatas"][0][i]["source"]
+        texts.append((source, text))
+    return texts
 
-    return ranked[:5]
-
-# ---------- GEMINI ANSWER GENERATOR ----------
+# --------- Generate Answer with Gemini ----------
 def generate_answer_with_gemini(user_query, retrieved_data):
-    # Merge retrieved results into context
+    if not retrieved_data:
+        return "⚠ Sorry, I couldn't find any relevant information to answer your question."
+
     context_text = "\n".join([text for _, text in retrieved_data])
     prompt = f"""
-    You are an intelligent MOSDAC assistant.
-    Use the following context to answer the user question:
+    You are an intelligent assistant for ISRO's MOSDAC platform.
+    Use the following context to answer the user query in simple terms:
     
     Context:
     {context_text}
-    
+
     Question:
     {user_query}
-    
-    Provide a *clear, structured answer in bullet points*.
-    Avoid just listing documents; summarize the information.
+
+    Respond in clear bullet points and avoid repeating the context. Be concise and specific.
     """
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# ---------- STREAMLIT UI ----------
+# --------- Streamlit UI ----------
 st.set_page_config(page_title="MOSDAC Chatbot", layout="centered", initial_sidebar_state="collapsed")
 
 st.markdown("""
@@ -79,7 +78,7 @@ st.markdown("""
 st.title("🛰 MOSDAC Knowledge Chatbot")
 translator = Translator()
 
-query = st.text_input("Ask a question about missions, sensors, documents...")
+query = st.text_input("Ask a question about missions, sensors, or documents...")
 
 if query:
     try:
@@ -90,11 +89,15 @@ if query:
 
     st.markdown(f"<div class='message-container message-human'>👤 *You:* {query}</div>", unsafe_allow_html=True)
 
-    index, metadata = load_vector_db()
+    collection = load_vector_db()
     model = load_model()
-    results = search(translated, index, metadata, model)
+    results = search(translated, collection, model)
 
-    # ✅ Instead of showing raw matches → Generate AI answer
+    # 🔍 Optional: Debug - show matches
+    with st.expander("🔍 Retrieved Context (Debug)"):
+        for i, (src, txt) in enumerate(results, 1):
+            st.markdown(f"**{i}. {src}**: {txt[:300]}...", unsafe_allow_html=True)
+
     with st.spinner("Generating answer..."):
         ai_answer = generate_answer_with_gemini(translated, results)
 
