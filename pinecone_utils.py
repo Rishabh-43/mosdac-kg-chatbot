@@ -1,26 +1,35 @@
 import pinecone
 from sentence_transformers import SentenceTransformer
-import os
 
-# Load environment variables (optional) or directly paste your API key
-PINECONE_API_KEY = "pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2ZYNL2"
-PINECONE_ENV = "us-east-1-aws"  # e.g., "gcp-starter" or "us-central1-gcp"
-INDEX_NAME = "mosdac-rag"  # your index name
+def init_pinecone(api_key: str, environment: str = "us-east1-gcp"):
+    """Initialize Pinecone client"""
+    try:
+        pc = pinecone.Pinecone(api_key=api_key)
+        return pc
+    except Exception as e:
+        raise ConnectionError(f"Failed to initialize Pinecone: {str(e)}")
 
-# Initialize Pinecone
-pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
-index = pinecone.Index(INDEX_NAME)
+def get_embeddings_model(model_name: str = "multi-qa-MiniLM-L6-cos-v1"):
+    """Load sentence transformer model"""
+    try:
+        return SentenceTransformer(model_name)
+    except Exception as e:
+        raise ImportError(f"Failed to load model: {str(e)}")
 
-# Load embedding model
-model = SentenceTransformer("multi-qa-MiniLM-L6-cos-v1")
-
-def embed_and_upsert(texts, namespace="default"):
-    vectors = model.encode(texts, show_progress_bar=True)
-    ids = [f"id-{i}" for i in range(len(texts))]
-    index.upsert(vectors=zip(ids, vectors), namespace=namespace)
-    return ids
-
-def query_pinecone(query, top_k=5, namespace="default"):
-    vector = model.encode([query])[0]
-    results = index.query(vector=vector.tolist(), top_k=top_k, include_metadata=True, namespace=namespace)
-    return results
+def query_index(query: str, 
+               index_name: str = "mosdac-rag", 
+               top_k: int = 3,
+               api_key: str = None):
+    """Query Pinecone index with text"""
+    try:
+        pc = init_pinecone(api_key)
+        index = pc.Index(index_name)
+        model = get_embeddings_model()
+        query_embedding = model.encode(query).tolist()
+        return index.query(
+            vector=query_embedding,
+            top_k=top_k,
+            include_metadata=True
+        )['matches']
+    except Exception as e:
+        raise RuntimeError(f"Query failed: {str(e)}")
