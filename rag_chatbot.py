@@ -1,65 +1,63 @@
 # rag_chatbot.py
 
+import os
 import streamlit as st
 from pinecone import Pinecone
 from sentence_transformers import SentenceTransformer
 from googletrans import Translator
 import google.generativeai as genai
-import os
 
-# ---------- CONFIG ----------
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY") or "pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2ZYNL2"
-PINECONE_ENV = "us-east-1"  # only needed for UI clarity, not used in code
+# ---------- CONFIG ---------- #
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2ZYNL2")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyAyhcpDKXBCs9J5B-lS_-RCbrCNcfKP7hw")
 INDEX_NAME = "mosdac-rag"
 EMBEDDING_MODEL_NAME = "multi-qa-MiniLM-L6-cos-v1"
 
-GEMINI_API_KEY = "AIzaSyAyhcpDKXBCs9J5B-lS_-RCbrCNcfKP7hw"
+# ---------- API Setup ---------- #
 genai.configure(api_key=GEMINI_API_KEY)
 
-# ---------- Load Pinecone Client ----------
+# ---------- Load Pinecone Index ---------- #
 @st.cache_resource
-def load_pinecone_index():
+def load_index():
     pc = Pinecone(api_key=PINECONE_API_KEY)
-    index = pc.Index(INDEX_NAME)
-    return index
+    return pc.Index(INDEX_NAME)
 
-# ---------- Load Embedding Model ----------
+# ---------- Load Embedding Model ---------- #
 @st.cache_resource
 def load_model():
     return SentenceTransformer(EMBEDDING_MODEL_NAME)
 
-# ---------- Search Function ----------
+# ---------- Query Vector DB ---------- #
 def search(query, index, model, k=5):
-    query_embedding = model.encode([query])[0].tolist()
-    response = index.query(vector=query_embedding, top_k=k, include_metadata=True)
-    results = [(match['metadata']['source'], match['metadata']['text']) for match in response['matches']]
-    return results
+    query_vector = model.encode([query])[0].tolist()
+    result = index.query(vector=query_vector, top_k=k, include_metadata=True)
+    return [(match["metadata"]["source"], match["metadata"]["text"]) for match in result["matches"]]
 
-# ---------- Answer with Gemini ----------
-def generate_answer_with_gemini(user_query, retrieved_data):
+# ---------- Gemini Response ---------- #
+def generate_answer_with_gemini(question, retrieved_data):
     if not retrieved_data:
-        return "⚠ Sorry, I couldn't find any relevant information."
+        return "⚠ Sorry, I couldn't find any relevant information for your question."
 
-    context_text = "\n".join([text for _, text in retrieved_data])
+    context = "\n".join([text for _, text in retrieved_data])
     prompt = f"""
-    You are an intelligent assistant for ISRO's MOSDAC platform.
-    Use the following context to answer the user's question clearly and helpfully:
+    You are a helpful assistant for ISRO's MOSDAC platform.
+    Use the following context to answer the question clearly.
 
     Context:
-    {context_text}
+    {context}
 
     Question:
-    {user_query}
+    {question}
 
-    Format the answer in bullet points if relevant. Be clear, concise, and avoid repeating the same content.
+    Answer in bullet points. Be specific, avoid repetition, and provide only the necessary information.
     """
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# ---------- Streamlit UI ----------
-st.set_page_config(page_title="MOSDAC Chatbot", layout="centered", initial_sidebar_state="collapsed")
+# ---------- Streamlit UI ---------- #
+st.set_page_config(page_title="MOSDAC Chatbot", layout="centered")
 
 st.markdown("""
     <style>
@@ -80,26 +78,27 @@ st.markdown("""
 st.title("🛰 MOSDAC Knowledge Chatbot")
 translator = Translator()
 
+# ---------- Query Handling ---------- #
 query = st.text_input("Ask a question about missions, sensors, or documents...")
 
 if query:
     try:
-        translated = translator.translate(query, src='auto', dest='en').text
-    except Exception:
-        translated = query
+        translated_query = translator.translate(query, src="auto", dest="en").text
+    except:
+        translated_query = query
         st.warning("⚠ Translation failed, using original query.")
 
     st.markdown(f"<div class='message-container message-human'>👤 *You:* {query}</div>", unsafe_allow_html=True)
 
-    index = load_pinecone_index()
+    index = load_index()
     model = load_model()
-    results = search(translated, index, model)
+    results = search(translated_query, index, model)
 
     with st.expander("🔍 Retrieved Context"):
         for i, (src, txt) in enumerate(results, 1):
-            st.markdown(f"**{i}. {src}**: {txt[:300]}...")
+            st.markdown(f"**{i}. {src.upper()}**: {txt[:300]}...")
 
     with st.spinner("Generating answer..."):
-        answer = generate_answer_with_gemini(translated, results)
+        response = generate_answer_with_gemini(translated_query, results)
 
-    st.markdown(f"<div class='message-container message-bot'>🤖 *Answer:* {answer}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='message-container message-bot'>🤖 *Answer:* {response}</div>", unsafe_allow_html=True)
