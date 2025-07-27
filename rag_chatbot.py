@@ -2,7 +2,7 @@
 
 import os
 import streamlit as st
-from pinecone import Pinecone
+import pinecone  # ✅ updated import
 from sentence_transformers import SentenceTransformer
 from googletrans import Translator
 import google.generativeai as genai
@@ -19,8 +19,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 # ---------- Load Pinecone Index ---------- #
 @st.cache_resource
 def load_index():
-    pc = Pinecone(api_key=PINECONE_API_KEY)
-    return pc.Index(INDEX_NAME)
+    pinecone.init(api_key=PINECONE_API_KEY)
+    return pinecone.Index(INDEX_NAME)
 
 # ---------- Load Embedding Model ---------- #
 @st.cache_resource
