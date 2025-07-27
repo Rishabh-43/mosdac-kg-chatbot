@@ -1,62 +1,64 @@
+# rag_chatbot.py
+
 import streamlit as st
-import chromadb
-from chromadb.config import Settings
+from pinecone import Pinecone
 from sentence_transformers import SentenceTransformer
 from googletrans import Translator
 import google.generativeai as genai
+import os
 
-# --------- GEMINI API KEY ----------
+# ---------- CONFIG ----------
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY") or "pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2ZYNL2"
+PINECONE_ENV = "us-east-1"  # only needed for UI clarity, not used in code
+INDEX_NAME = "mosdac-rag"
+EMBEDDING_MODEL_NAME = "multi-qa-MiniLM-L6-cos-v1"
+
 GEMINI_API_KEY = "AIzaSyAyhcpDKXBCs9J5B-lS_-RCbrCNcfKP7hw"
 genai.configure(api_key=GEMINI_API_KEY)
 
-# --------- Load Chroma DB ----------
+# ---------- Load Pinecone Client ----------
 @st.cache_resource
-def load_vector_db():
-    client = chromadb.PersistentClient(path="vector_db/chroma")
-    collection = client.get_or_create_collection("mosdac_kg")
-    return collection
+def load_pinecone_index():
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    index = pc.Index(INDEX_NAME)
+    return index
 
-# --------- Load Embedding Model ----------
+# ---------- Load Embedding Model ----------
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("multi-qa-MiniLM-L6-cos-v1")
+    return SentenceTransformer(EMBEDDING_MODEL_NAME)
 
-# --------- Search from Vector DB ----------
-def search(query, collection, model, k=5):
+# ---------- Search Function ----------
+def search(query, index, model, k=5):
     query_embedding = model.encode([query])[0].tolist()
-    results = collection.query(query_embeddings=[query_embedding], n_results=k)
+    response = index.query(vector=query_embedding, top_k=k, include_metadata=True)
+    results = [(match['metadata']['source'], match['metadata']['text']) for match in response['matches']]
+    return results
 
-    texts = []
-    for i in range(len(results["ids"][0])):
-        text = results["metadatas"][0][i]["text"]
-        source = results["metadatas"][0][i]["source"]
-        texts.append((source, text))
-    return texts
-
-# --------- Generate Answer with Gemini ----------
+# ---------- Answer with Gemini ----------
 def generate_answer_with_gemini(user_query, retrieved_data):
     if not retrieved_data:
-        return "⚠ Sorry, I couldn't find any relevant information to answer your question."
+        return "⚠ Sorry, I couldn't find any relevant information."
 
     context_text = "\n".join([text for _, text in retrieved_data])
     prompt = f"""
     You are an intelligent assistant for ISRO's MOSDAC platform.
-    Use the following context to answer the user query in simple terms:
-    
+    Use the following context to answer the user's question clearly and helpfully:
+
     Context:
     {context_text}
 
     Question:
     {user_query}
 
-    Respond in clear bullet points and avoid repeating the context. Be concise and specific.
+    Format the answer in bullet points if relevant. Be clear, concise, and avoid repeating the same content.
     """
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# --------- Streamlit UI ----------
+# ---------- Streamlit UI ----------
 st.set_page_config(page_title="MOSDAC Chatbot", layout="centered", initial_sidebar_state="collapsed")
 
 st.markdown("""
@@ -89,16 +91,15 @@ if query:
 
     st.markdown(f"<div class='message-container message-human'>👤 *You:* {query}</div>", unsafe_allow_html=True)
 
-    collection = load_vector_db()
+    index = load_pinecone_index()
     model = load_model()
-    results = search(translated, collection, model)
+    results = search(translated, index, model)
 
-    # 🔍 Optional: Debug - show matches
-    with st.expander("🔍 Retrieved Context (Debug)"):
+    with st.expander("🔍 Retrieved Context"):
         for i, (src, txt) in enumerate(results, 1):
-            st.markdown(f"**{i}. {src}**: {txt[:300]}...", unsafe_allow_html=True)
+            st.markdown(f"**{i}. {src}**: {txt[:300]}...")
 
     with st.spinner("Generating answer..."):
-        ai_answer = generate_answer_with_gemini(translated, results)
+        answer = generate_answer_with_gemini(translated, results)
 
-    st.markdown(f"<div class='message-container message-bot'>🤖 *Answer:* {ai_answer}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='message-container message-bot'>🤖 *Answer:* {answer}</div>", unsafe_allow_html=True)
