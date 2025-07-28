@@ -4,7 +4,7 @@ from pinecone import ServerlessSpec
 
 
 pinecone.init(
-    api_key=os.getenv("PINECONE_API_KEY") or "pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2ZYNL2",
+    api_key=os.getenv("PINECONE_API_KEY") or "ZYNL2pcsk_7USieR_TWCp5dcfXBN4ePuRgXGuYCR2YDX8ipq2V43vc4My6mZZUn8VffNFoUgeN2",
     environment="us-east-1"
 )
 

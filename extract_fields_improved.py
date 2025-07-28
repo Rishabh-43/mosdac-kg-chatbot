@@ -2,7 +2,20 @@ import pandas as pd
 import re
 
 # Load the mission file
-df = pd.read_csv("all_missions.csv")
+#df = pd.read_csv("all_missions.csv")
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logging.info("Script started")
+
+
+import os
+
+file_path = "all_missions.csv"
+if os.path.exists(file_path):
+    df = pd.read_csv(file_path)
+else:
+    print(f"File not found: {file_path}")
 
 # --- Helper functions ---
 def extract_launch_date(text):
